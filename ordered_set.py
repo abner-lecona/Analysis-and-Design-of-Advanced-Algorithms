@@ -1,3 +1,12 @@
+# ----------------------------------------------------------
+# Lab #2: Ordered Set Class
+#
+# Date: 20-Sep-2023
+# Authors:
+#           A01748222 Joahan Javier Garcia Fernandez
+#           A01753179 Abner Maximiliano Lecona Nieves
+# ----------------------------------------------------------
+
 from __future__ import annotations
 import types
 from typing import Any, Generic, TypeVar, cast
@@ -90,7 +99,7 @@ class OrderedSet(Generic[T]):
     # Complexity: O(1)
     def __iter__(self) -> Iterator[T]:
         return OrderedSet.__Iterator(self.__sentinel)
-    
+
     # Compleity: O(N)
     def discard(self, value: T) -> None:
         current = self.__sentinel.next
@@ -100,8 +109,8 @@ class OrderedSet(Generic[T]):
                 current.next.prev = current.prev
                 self.__count -= 1
                 return
-            current =  current.next
-    
+            current = current.next
+
     # Complexity: O(N^2)
     def __eq__(self, other: object) -> bool:
         if isinstance(other, OrderedSet) and len(self) == len(other):
@@ -111,7 +120,7 @@ class OrderedSet(Generic[T]):
             return True
         else:
             return False
-        
+
     def __le__(self, other: OrderedSet[T]) -> bool:
         if len(self) <= len(other):
             for elem in self:
@@ -120,22 +129,22 @@ class OrderedSet(Generic[T]):
             return True
         else:
             return False
-        
+
     def __and__(self, other: OrderedSet[T]) -> OrderedSet[T]:
         result_and: OrderedSet[T] = OrderedSet()
         for elem in self:
             if elem in other:
                 result_and.add(elem)
         return result_and
-    
+
     def __sub__(self, other: OrderedSet[T]) -> OrderedSet[T]:
         result_sub: OrderedSet[T] = OrderedSet()
         for elem in self:
             if elem not in other:
                 result_sub.add(elem)
         return result_sub
-    
-    def remove(self,value: T) -> None:
+
+    def remove(self, value: T) -> None:
         if value not in self:
             raise KeyError()
         current = self.__sentinel.next
@@ -145,23 +154,23 @@ class OrderedSet(Generic[T]):
                 current.next.prev = current.prev
                 self.__count -= 1
                 return
-            current =  current.next
-    
-    def __lt__(self,other: OrderedSet[T]) -> bool:
+            current = current.next
+
+    def __lt__(self, other: OrderedSet[T]) -> bool:
         for elem in self:
             if elem not in other:
                 return False
         if self == other:
             return False
         return True
-    
-    def __ge__(self,other: OrderedSet[T]) -> bool:
+
+    def __ge__(self, other: OrderedSet[T]) -> bool:
         for elem in other:
             if elem not in self:
                 return False
         return True
 
-    def __gt__(self,other: OrderedSet[T]) -> bool:
+    def __gt__(self, other: OrderedSet[T]) -> bool:
         for elem in other:
             if elem not in self:
                 return False
@@ -169,13 +178,13 @@ class OrderedSet(Generic[T]):
             return False
         return True
 
-    def isdisjoint(self,other: OrderedSet[T]) -> bool:
+    def isdisjoint(self, other: OrderedSet[T]) -> bool:
         for elem in self:
             if elem in other:
                 return False
         return True
-    
-    def __or__(self,other: OrderedSet[T]) -> OrderedSet[T]:
+
+    def __or__(self, other: OrderedSet[T]) -> OrderedSet[T]:
         result_or: OrderedSet[T] = OrderedSet()
         for elem in self:
             result_or.add(elem)
@@ -184,7 +193,7 @@ class OrderedSet(Generic[T]):
                 result_or.add(elem)
         return result_or
 
-    def __xor__(self,other: OrderedSet[T]) -> OrderedSet[T]:
+    def __xor__(self, other: OrderedSet[T]) -> OrderedSet[T]:
         result_xor: OrderedSet[T] = OrderedSet()
         for elem in self:
             if elem not in other:
@@ -193,44 +202,21 @@ class OrderedSet(Generic[T]):
             if elem not in self:
                 result_xor.add(elem)
         return result_xor
-                
-        
 
-    # def clear(self) -> None:
-    #     ...
+    def clear(self) -> None:
+        self.__sentinel.next = self.__sentinel
+        self.__sentinel.prev = self.__sentinel
+        self.__count = 0
 
-    # def pop(self) -> T:
-    #     ...
-
+    def pop(self) -> T:
+        if not self:
+            raise KeyError()
+        last_element = self.__sentinel.prev.info
+        self.__sentinel.prev = self.__sentinel.prev.prev
+        self.__sentinel.prev.next = self.__sentinel
+        self.__count -= 1
+        return last_element  # type: ignore
 
 
 if __name__ == '__main__':
     a: OrderedSet[int] = OrderedSet([4, 8, 15, 16, 23, 42])
-    print(a)
-    print(f'{hash(a) = :x}')
-    print(f'{a is None = }')
-    print(f'{a == a = }')
-    print(f'{repr(a) = }')
-    a.add(4)
-    a.add(8)
-    a.add(15)
-    print(f'{repr(a) = }')
-    print(f'{len(a) = }')
-    a.add(108)
-    print(f'{len(a) = }')
-    print(f'{8 in a = }')
-    print(f'{5 in a = }')
-    b: OrderedSet[str] = OrderedSet()
-    print(f'{b = }')
-    b.add('hello')
-    b.add('bye')
-    c = OrderedSet(b)
-    c.add('hi')
-    print(f'{b = }')
-    print(f'{c = }')
-    d = OrderedSet('hello world')
-    print(f'{d = }')
-    e = OrderedSet((5, 6, 7, 9))
-    print(f'{e = }')
-    f = OrderedSet({'uno': 'one', 'dos': 'two', 'tres': 'three'}.items())
-    print(f'{f = }')
