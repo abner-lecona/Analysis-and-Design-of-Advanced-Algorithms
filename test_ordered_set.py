@@ -447,40 +447,40 @@ class TestOrderedSet(TestCase):
         d = OrderedSet()
         self.assertEqual('OrderedSet()', repr(self.d ^ d))
 
-    # def test_clear(self) -> None:
-    #     self.a.clear()
-    #     self.assertEqual('OrderedSet()', repr(self.a))
-    #     self.a.add(108)
-    #     self.assertEqual('OrderedSet([108])', repr(self.a))
-    #     self.b.clear()
-    #     self.assertEqual('OrderedSet()', repr(self.b))
-    #     self.b.add(5.0)
-    #     self.b.add(10.0)
-    #     self.assertEqual('OrderedSet([5.0, 10.0])',
-    #                      repr(self.b))
-    #     self.c.clear()
-    #     self.assertEqual('OrderedSet()', repr(self.c))
-    #     self.c.add('Legolas')
-    #     self.c.add('Frodo')
-    #     self.assertEqual("OrderedSet(['Legolas', 'Frodo'])",
-    #                      repr(self.c))
-    #     self.d.clear()
-    #     self.assertEqual('OrderedSet()', repr(self.d))
-    #     self.d.add(None)
-    #     self.assertEqual('OrderedSet([None])', repr(self.d))
+    def test_clear(self) -> None:
+        self.a.clear()
+        self.assertEqual('OrderedSet()', repr(self.a))
+        self.a.add(108)
+        self.assertEqual('OrderedSet([108])', repr(self.a))
+        self.b.clear()
+        self.assertEqual('OrderedSet()', repr(self.b))
+        self.b.add(5.0)
+        self.b.add(10.0)
+        self.assertEqual('OrderedSet([5.0, 10.0])',
+                         repr(self.b))
+        self.c.clear()
+        self.assertEqual('OrderedSet()', repr(self.c))
+        self.c.add('Legolas')
+        self.c.add('Frodo')
+        self.assertEqual("OrderedSet(['Legolas', 'Frodo'])",
+                         repr(self.c))
+        self.d.clear()
+        self.assertEqual('OrderedSet()', repr(self.d))
+        self.d.add(None)
+        self.assertEqual('OrderedSet([None])', repr(self.d))
 
-    # def test_pop(self) -> None:
-    #     self.assertEqual(42, self.a.pop())
-    #     self.assertEqual(23, self.a.pop())
-    #     with self.assertRaises(KeyError):
-    #         while True:
-    #             self.a.pop()
-    #     self.assertEqual(1.4142135624, self.b.pop())
-    #     self.assertEqual(2.7182818285, self.b.pop())
-    #     self.assertEqual('Thorin', self.c.pop())
-    #     self.assertEqual('Bombur', self.c.pop())
-    #     with self.assertRaises(KeyError):
-    #         self.assertEqual(None, self.d.pop())
+    def test_pop(self) -> None:
+        self.assertEqual(42, self.a.pop())
+        self.assertEqual(23, self.a.pop())
+        with self.assertRaises(KeyError):
+            while True:
+                self.a.pop()
+        self.assertEqual(1.4142135624, self.b.pop())
+        self.assertEqual(2.7182818285, self.b.pop())
+        self.assertEqual('Thorin', self.c.pop())
+        self.assertEqual('Bombur', self.c.pop())
+        with self.assertRaises(KeyError):
+            self.assertEqual(None, self.d.pop())
 
 
 if __name__ == '__main__':
